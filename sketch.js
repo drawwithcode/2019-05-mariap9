@@ -1,57 +1,24 @@
 let ytide = 0.0;
-let frame = 0;
 let x = 0;
-let y = 800;
-
+let y = 400;
+var mic;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  ellipseMode(RADIUS);
+  mic = new p5.AudioIn();
+  mic.start();
+
 }
 
-
 function draw() {
-
   background(214, 250, 255);
-
-  push();
-  if (mouseIsPressed == true) {
-    fill(255);
-  } else {
-    noFill();
-  }
-
-  stroke(214, 250, 255);
-  strokeWeight(2);
-  ellipse(mouseX, mouseY, 10, 10);
-  pop();
-
-
-
-  push();
-  x = lerp(x, mouseY * 2, 0.02);
-  y = lerp(y, mouseX / 2, 0.05);
-
-  if (keyIsDown(32) == true) {
-    x -= 8;
-  } else {
-    y -= 8;
-  }
-
-  fill(255, 93, 84);
-  noStroke();
-  ellipse(x * 1.5, y * 1.5, 20, 20);
-  pop();
-
-
 
   push();
   fill(0, 33, 69);
   beginShape();
-
   let xtide = 20;
   for (let x = 0; x <= width; x += 15) {
-    let y = map(noise(xtide, ytide), 0, 1, 150, 250);
+    let y = map(noise(xtide, ytide), 0, 1, 150, 300);
     vertex(x, y);
     xtide += 0.05;
   }
@@ -59,66 +26,39 @@ function draw() {
   vertex(width, height);
   vertex(0, height);
   endShape(CLOSE);
-  pop();
-
-
 
   push();
-  x = lerp(x, mouseY * 2, 0.02);
-  y = lerp(y, mouseX / 2, 0.05);
-
-  if (keyIsDown(32) == true) {
-    x -= 8;
-  } else {
-    y -= 8;
-  }
-
-  if (mouseIsPressed == true) {
-    fill(255, 93, 84, 20);
-    noStroke();
-    var tittle5 = "camuflage baby"
-    drawingContext.font = "normal 21px Karla";
-    drawingContext.textAlign = "center";
-    fill(214, 250, 255, 15);
-    text(tittle5, width / 2, (height / 2) + 70);
-
-  } else {
-    noFill();
-    stroke(255, 93, 84);
-    strokeWeight(3);
-  }
-
-
-  ellipse(x * 1.5, y * 1.5, 20, 20);
+  var vol = mic.getLevel();
+  noStroke();
+  fill(255, 93, 84);
+  strokeWeight(3);
+  translate(width * vol, height * vol*-0.2);
+  ellipse(150, height / 2 + 100, 60, 40);
+  fill(255);
+  ellipse(165, height / 2 + 100, 15, 15);
+  fill(0);
+  ellipse(165, height / 2 + 100, 8, 8);
+  stroke(255, 93, 84);
+  strokeWeight(3);
+  noFill();
+  ellipse(115, height / 2 + 100, 10, 15);
   pop();
 
-
-
-  push();
-  if (mouseIsPressed == true) {
-    fill(255);
-    stroke(255);
-    ellipse(mouseX, mouseY, 10, 10);
-  } else {
-    noFill();
-    cursor(HAND);
-  }
-  pop();
-
-
-  var tittle1 = "catching nemo"
-  drawingContext.font = "bold 21px Karla";
+  var tittle5 = "Whistle, whistle! so Nemo could cross the tide"
+  drawingContext.font = "normal 18px Karla";
   drawingContext.textAlign = "center";
-  fill(214, 250, 255);
-  text(tittle1, width / 2, (height / 2) + 250);
+  fill(35, 90, 148);
+  text(tittle5, width / 2, (height / 2) + 220);
 
-  var tittle2 = "press space bar to atract him";
-  var tittle3 = "click to not catch him";
-  drawingContext.font = "normal 10px Karla";
+  var tittle5 = "the stronger, the better"
+  drawingContext.font = "normal 12px Karla";
   drawingContext.textAlign = "center";
-  fill(214, 250, 255);
-  text(tittle2, width / 2, (height / 2) + 270);
-  text(tittle3, width / 2, (height / 2) + 285);
+  fill(74, 135, 199);
+  text(tittle5, width / 2, (height / 2) + 240);
 
 
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
